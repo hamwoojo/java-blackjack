@@ -22,26 +22,40 @@ public class Game {
     private void initPhase(Gamer gamer,Dealer dealer, CardDeck cardDeck){
         System.out.println("딜러와 게이머가 카드를 두 장 뽑습니다.");
         for (int i = 0; i < INIT_RECEIVE_CARD_COUNT; i++) {
-            Card card = cardDeck.draw();
-            gamer.receiveCard(card);
+            Card gamerCard = cardDeck.draw();
+            gamer.receiveCard(gamerCard);
 
             Card dealerCard = cardDeck.draw();
             dealer.receiveCard(dealerCard);
         }
     }
     private void playingPhase(Scanner sc, CardDeck cardDeck, Gamer gamer){
-        String gamerInput;
+        String gamerInput,dealerInput;
+        boolean isGamerTurn = false;
+        boolean isDealerTurn = false;
         while(true){
             System.out.println("카드를 계속 뽑으시겠습니까? 종료를 원하시면 0을 입력하세요.");
             gamerInput = sc.nextLine();
-
             /* equals를 쓸때는 절대 null이 될수 없는 값을 앞에다 두면 NullPointException을 방지할 수 있다 */
             if("0".equals(gamerInput)){
+                isGamerTurn = true;
+            }else{
+                Card card = cardDeck.draw();
+                gamer.receiveCard(card);
+            }
+
+            System.out.println("카드를 계속 뽑으시겠습니까? 종료를 원하시면 0을 입력하세요.");
+            dealerInput = sc.nextLine();
+            if("0".equals(dealerInput)){
+                isDealerTurn = true;
+            }else{
+                Card card = cardDeck.draw();
+                gamer.receiveCard(card);
+            }
+
+            if(isGamerTurn && isDealerTurn){
                 break;
             }
-            /* 객체 지향에서 gamer는 card가 어떤식으로 본인에게 오는지 알필요가 없다 게이머는 그저 카드를 받는 본인의 역할에 충신하면 될뿐 */
-            Card card = cardDeck.draw();
-            gamer.receiveCard(card);
         }
     }
 }
