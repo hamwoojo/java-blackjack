@@ -40,6 +40,7 @@ public class CardDeck {
         if(number >= 11){
             return 10;
         }
+        return number;
     }
 
     private String numberToDenomination(int number) {
