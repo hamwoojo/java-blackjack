@@ -27,11 +27,19 @@ public class CardDeck {
         for (String pattern : PATTERNS) {
             for (int i = 1; i <= CARD_COUNT; i++) {
                 String denomination = this.numberToDenomination(i);
-                Card card = new Card(pattern,denomination);
+                int point = this.numberToPoint(i);
+                Card card = new Card(pattern,denomination,point);
                 cards.add(card);
             }
         }
         return cards;
+    }
+
+    /* JQK는 룰상 10점으로 계산 */
+    private int numberToPoint(int number) {
+        if(number >= 11){
+            return 10;
+        }
     }
 
     private String numberToDenomination(int number) {
