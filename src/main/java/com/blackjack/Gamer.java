@@ -5,32 +5,62 @@ import java.util.List;
 
 /* 게이머의 역할 : 카드를 받는다,카드를 확인한다, 카드를 공개한다, 카드를 더 받을지 결정한다..? */
 
-public class Gamer implements Player{
-    private List<Card> cards;
+public class Gamer implements Player {
+    private final List<Card> cards;
+    private boolean turn;
 
-    public Gamer(){
-        cards = new ArrayList<>();
+    private final String name;
+
+    public Gamer(String name) {
+        this.cards = new ArrayList<>();
+        this.name = name;
     }
+
     @Override
-    public void receiveCard(Card card){
+    public void receiveCard(Card card) {
         this.cards.add(card);
         this.showCards();
     }
+
     @Override
-    public List<Card> openCards(){
+    public List<Card> openCards() {
         return this.cards;
     }
 
     @Override
-    public void showCards(){
+    public void turnOff() {
+        this.setTurn(false);
+    }
+
+    @Override
+    public void turnOn() {
+        this.setTurn(true);
+    }
+
+    @Override
+    public boolean isTurn() {
+        return this.turn;
+    }
+
+    private void setTurn(boolean turn) {
+        this.turn = turn;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public void showCards() {
         StringBuilder sb = new StringBuilder();
         sb.append("게이머의 현재 보유 카드 목록 \n");
 
-        for(Card card : cards){
+        for (Card card : cards) {
             sb.append(card.toString());
             sb.append("\n");
         }
 
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 }

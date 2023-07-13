@@ -14,15 +14,18 @@ public class Game {
         Rule rule = new Rule();
         CardDeck cardDeck = new CardDeck();
 
-        List<Player> players = Arrays.asList(new Gamer(),new Dealer());
+        List<Player> players = Arrays.asList(new Gamer("hwj"),new Dealer());
+        List<Player> initAfterPlayers = initPhase(players,cardDeck);
+        List<Player> playingAfterPlayers = playingPhase(sc,cardDeck,initAfterPlayers);
 
-        initPhase(players,cardDeck);
-        playingPhase(sc,cardDeck,players);
+        Player winner = rule.getWinner(playingAfterPlayers);
+        System.out.println("승자는 " + winner.getName());
+
     }
 
 
     /* 시작에 항상 카드를 두 장씩 고정으로 받지만 i<2로 선언하는 for문으로 해버리면 매직넘버의 함정에 빠질 수 있다 */
-    private void initPhase(List<Player> players,CardDeck cardDeck){
+    private List<Player> initPhase(List<Player> players, CardDeck cardDeck){
         System.out.println("딜러와 게이머가 카드를 두 장 뽑습니다.");
         for (int i = 1; i <= INIT_RECEIVE_CARD_COUNT; i++) {
             for (Player player : players) {
@@ -30,15 +33,26 @@ public class Game {
                 player.receiveCard(card);
             }
         }
+        return players;
     }
-    private void playingPhase(Scanner sc, CardDeck cardDeck, List<Player> players){
-
+    private List<Player> playingPhase(Scanner sc, CardDeck cardDeck, List<Player> players){
+        List<Player> cardReceivePlayers;
         while(true){
-            boolean isAllPlayerTurnOff = receiveCardAllPlayers(sc,cardDeck,players);
-            if(isAllPlayerTurnOff){
+            cardReceivePlayers = receiveCardAllPlayers(sc,cardDeck,players);
+            if(isAllPlayerTurnOff(cardReceivePlayers)){
                 break;
             }
         }
+        return cardReceivePlayers;
+    }
+
+    private boolean isAllPlayerTurnOff(List<Player> players) {
+        for (Player player : players) {
+            if(player.isTurn()){
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean isReceiveCard(Scanner sc){
@@ -46,19 +60,19 @@ public class Game {
         return !STOP_RECEIVE_CARD.equals(sc.nextLine());
     }
 
-    private boolean receiveCardAllPlayers(Scanner sc, CardDeck cardDeck, List<Player> players) {
-        boolean isAllPlayerTurnOff = true;
-
+    private List<Player> receiveCardAllPlayers(Scanner sc, CardDeck cardDeck, List<Player> players) {
         for (Player player : players) {
+            System.out.println(player.getName()+"님 차례입니다.");
+
             if(isReceiveCard(sc)){
                 Card card = cardDeck.draw();
                 player.receiveCard(card);
-                isAllPlayerTurnOff = false;
+                player.turnOn();
             }else{
-                isAllPlayerTurnOff = true;
+                player.turnOff();
             }
         }
-        return isAllPlayerTurnOff;
+        return players;
     }
 
 

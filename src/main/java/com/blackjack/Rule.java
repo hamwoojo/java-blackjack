@@ -3,11 +3,26 @@ package com.blackjack;
 import java.util.List;
 
 public class Rule {
-    public int getScore(List<Card> cards){
-        return 0;
+    public Player getWinner(List<Player> players) {
+        Player highestPlayer = null;
+        int highestPoint = 0;
+
+        for (Player player : players) {
+            int playerPointSum = getPointSum(player.openCards());
+            if (playerPointSum > highestPoint) {
+                highestPoint = playerPointSum;
+                highestPlayer = player;
+            }
+        }
+        return highestPlayer;
     }
-    public void getWinner(Dealer dealer, Gamer gamer){
-        
+
+    private int getPointSum(List<Card> cards) {
+        int pointSum = 0;
+        for (Card card : cards) {
+            pointSum += card.getPoint();
+        }
+        return pointSum;
     }
 
 }
