@@ -34,4 +34,15 @@ public class ApplicationTest{
         assertThat(cards.get(0).getDenomination(),is(Card.Denomination.ACE));
         assertThat(cards.get(0).getDenomination().getPoint(),is(1));
     }
+
+    @Test
+    public void test_Stack확인(){
+        assertThat(cardDeck.getCards().size(),is(52));
+        cardDeck.draw();
+        assertThat(cardDeck.getCards().size(),is(51));
+        cardDeck.draw();
+        assertThat(cardDeck.getCards().size(),is(50));
+        cardDeck.draw();
+        assertThat(cardDeck.getCards().size(),is(49));
+    }
 }
