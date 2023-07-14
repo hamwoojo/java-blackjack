@@ -6,16 +6,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Card {
-    /* 모양 : 하트,다이아,스페이드,클로버 */
-    private String pattern;
-
-    /* A =1,   */
+    private Pattern pattern;
     private String denomination;
-
     private int point;
 
-    /* 반복문의 인덱스 */
-    public Card(String pattern,int index){
+    public Card(Pattern pattern,int index){
         this.pattern = pattern;
         this.denomination = numberToDenomination(index);
         this.point = numberToPoint(index);
@@ -44,6 +39,22 @@ public class Card {
     @Override
     public String toString(){
         return "Card{" + "pattern='" + pattern + "', denomination='" + denomination + "'}";
+    }
+
+    public enum Pattern{
+        SPADE("spade"),
+        HEART("heart"),
+        DIAMOND("diamond"),
+        CLUB("club");
+
+        private String value;
+
+        Pattern(){}
+        Pattern(String value){
+            this.value = value;
+        }
+
+
     }
 
 
