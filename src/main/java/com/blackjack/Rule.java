@@ -1,28 +1,20 @@
 package com.blackjack;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class Rule {
     public Player getWinner(List<Player> players) {
-        Player highestPlayer = null;
-        int highestPoint = 0;
 
-        for (Player player : players) {
-            int playerPointSum = getPointSum(player.openCards());
-            if (playerPointSum > highestPoint) {
-                highestPoint = playerPointSum;
-                highestPlayer = player;
-            }
-        }
+        Player highestPlayer = players.stream()
+                .max(Comparator.comparing((player -> getPointSum(player.openCards()))))
+                .orElse(null);
+
         return highestPlayer;
     }
 
     private int getPointSum(List<Card> cards) {
-        int pointSum = 0;
-        for (Card card : cards) {
-            pointSum += card.getDenomination().getPoint();
-        }
-        return pointSum;
+        return cards.stream().mapToInt(card -> card.getDenomination().getPoint()).sum();
     }
 
 }

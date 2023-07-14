@@ -74,7 +74,7 @@ public class Dealer implements Player {
     @Override
     public void showCards() {
         StringBuilder sb = new StringBuilder();
-        sb.append("딜러의 현재 보유 카드 목록 \n");
+        sb.append(getName() + "의 현재 보유 카드 목록 \n");
 
         for (Card card : cards) {
             sb.append(card.toString());
