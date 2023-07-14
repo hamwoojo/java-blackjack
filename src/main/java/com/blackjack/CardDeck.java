@@ -2,8 +2,10 @@ package com.blackjack;
 
 import lombok.Getter;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 @Getter
 public class CardDeck {
@@ -18,13 +20,10 @@ public class CardDeck {
     }
 
     private Stack<Card> generateCards(){
-        Stack<Card> cards = new Stack<>();
-        for (Card.Pattern pattern : Card.Pattern.values()) {
-            for(Card.Denomination denomination : Card.Denomination.values()){
-                Card card = new Card(pattern,denomination);
-                cards.push(card);
-            }
-        }
+        cards = Arrays.stream(Card.Pattern.values())
+                .flatMap(pattern -> Arrays.stream(Card.Denomination.values())
+                        .map(denomination -> new Card(pattern,denomination)))
+                        .collect(Collectors.toCollection(Stack::new));
         return cards;
     }
     public Card draw(){
@@ -32,13 +31,6 @@ public class CardDeck {
     }
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        for(Card card : cards){
-            sb.append(card.toString());
-            sb.append("\n");
-        }
-
-        return sb.toString();
+        return cards.stream().map(Card::toString).collect(Collectors.joining("\n"));
     }
 }
