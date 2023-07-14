@@ -20,7 +20,7 @@ public class Rule {
     private int getPointSum(List<Card> cards) {
         int pointSum = 0;
         for (Card card : cards) {
-            pointSum += card.getPoint();
+            pointSum += card.getDenomination().getPoint();
         }
         return pointSum;
     }

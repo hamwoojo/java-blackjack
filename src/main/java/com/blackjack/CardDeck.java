@@ -22,8 +22,8 @@ public class CardDeck {
     private List<Card> generateCards(){
         List<Card> cards = new LinkedList<>();
         for (Card.Pattern pattern : Card.Pattern.values()) {
-            for (int i = 1; i <= CARD_COUNT; i++) {
-                Card card = new Card(pattern,i);
+            for(Card.Denomination denomination : Card.Denomination.values()){
+                Card card = new Card(pattern,denomination);
                 cards.add(card);
             }
         }
