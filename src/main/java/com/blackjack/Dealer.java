@@ -3,6 +3,7 @@ package com.blackjack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /* 딜러의 역할 : 추가로 카드를 받는다, 단 2카드의 합계가 16점 이하면 반드시 한장을 추가로 뽑고 17점 이상이면 받을 수 없다.
@@ -75,12 +76,7 @@ public class Dealer implements Player {
     public void showCards() {
         StringBuilder sb = new StringBuilder();
         sb.append(getName() + "의 현재 보유 카드 목록 \n");
-
-        for (Card card : cards) {
-            sb.append(card.toString());
-            sb.append("\n");
-        }
-
+        sb.append(cards.stream().map(card -> card.toString()).collect(Collectors.joining("\n")));
         System.out.println(sb);
     }
 
