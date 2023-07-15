@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 public class Dealer implements Player {
     private static final String NAME = "딜러";
     private static final int CAN_RECEIVE_POINT = 16;
-
     private final List<Card> cards;
     private boolean turn;
 
@@ -36,11 +35,7 @@ public class Dealer implements Player {
     }
 
     private int getPointSum() {
-        int sum = 0;
-        for (Card card : cards) {
-            sum += card.getDenomination().getPoint();
-        }
-        return sum;
+        return cards.stream().mapToInt(card -> card.getDenomination().getPoint()).sum();
     }
 
     @Override

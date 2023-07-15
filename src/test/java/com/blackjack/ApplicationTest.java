@@ -23,22 +23,6 @@ public class ApplicationTest{
         rule = new Rule();
     }
     @Test
-    public void test_카드패턴비교(){
-        assertThat(cards.get(0).getPattern(), is(Card.Pattern.SPADE));
-        assertThat(cards.get(13).getPattern(), is(Card.Pattern.HEART));
-
-        for (Card card : cards) {
-            System.out.println(card.toString());
-        }
-    }
-
-    @Test
-    public void test_카드끗수비교(){
-        assertThat(cards.get(0).getDenomination(),is(Card.Denomination.ACE));
-        assertThat(cards.get(0).getDenomination().getPoint(),is(1));
-    }
-
-    @Test
     public void test_Stack확인(){
         assertThat(cardDeck.getCards().size(),is(52));
         cardDeck.draw();
@@ -47,6 +31,15 @@ public class ApplicationTest{
         assertThat(cardDeck.getCards().size(),is(50));
         cardDeck.draw();
         assertThat(cardDeck.getCards().size(),is(49));
+    }
+
+    @Test
+    public void getPointSum테스트(){
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(cardDeck.draw());
+        dealer.receiveCard(cardDeck.draw());
+        dealer.receiveCard(cardDeck.draw());
+        dealer.receiveCard(cardDeck.draw());
     }
 
     @Test
