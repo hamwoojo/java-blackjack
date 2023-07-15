@@ -57,7 +57,6 @@ public class Gamer implements Player {
         StringBuilder sb = new StringBuilder();
         sb.append(name + "의 현재 보유 카드 목록 \n");
         sb.append(cards.stream().map(card -> card.toString()).collect(Collectors.joining("\n")));
-
         System.out.println(sb);
     }
 }
